@@ -1,5 +1,6 @@
 package com.example.onlinedatabase;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -18,6 +19,8 @@ import androidx.core.view.WindowInsetsCompat;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import kotlin.Suppress;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -40,12 +43,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void AddUsersInList() {
-        users.add(new User("Алексей", "Я ушел", 18));
-        users.add(new User("Андрей", "Я не буду работать", 17));
-        users.add(new User("Максим", "Я анимешник", 19));
-        users.add(new User("Дмитрий", "Отдохнуть хочу", 27));
-        users.add(new User("Алексей", "Я ушел", 15));
-        users.add(new User("Алексий", "Я умер", 91));
+        users.add(new User("Алексей", "Я ушел", 18, 0));
+        users.add(new User("Андрей", "Я не буду работать", 17, 1));
+        users.add(new User("Максим", "Я анимешник", 19, 2));
+        users.add(new User("Дмитрий", "Отдохнуть хочу", 27, 1));
+        users.add(new User("Алексей", "Я ушел", 15, 2));
+        users.add(new User("Алексий", "Я умер", 91, 0));
     }
 
     private void Init() {
@@ -89,6 +92,7 @@ public class MainActivity extends AppCompatActivity {
             return position;
         }
 
+        @SuppressLint("ViewHolder")
         @Override
         public View getView(int position, View currentView, ViewGroup parent) {
             User currentUser = getItem(position);
@@ -96,6 +100,22 @@ public class MainActivity extends AppCompatActivity {
 
             TextView nameView = currentView.findViewById(R.id.NameTextView);
             TextView stateView = currentView.findViewById(R.id.StateTextView);
+
+            //получем StateRound из currentView(который содержит R.layout.item_user)
+            FrameLayout StateRound = currentView.findViewById(R.id.StateRound);
+            //установка отображения статуса сигнала
+            switch (currentUser.getStateSignal())
+            {
+                case 0:
+                    StateRound.setBackgroundResource(R.drawable.back_offline);
+                    break;
+                case 1:
+                    StateRound.setBackgroundResource(R.drawable.back_online);
+                    break;
+                case 2:
+                    StateRound.setBackgroundResource(R.drawable.back_departed);
+                    break;
+            }
 
             nameView.setText(currentUser.getName());
             stateView.setText(currentUser.getState());

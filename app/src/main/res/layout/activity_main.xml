@@ -11,8 +11,9 @@
         android:layout_height="match_parent"
         android:orientation="horizontal">
 
-        <!--android:divider="@android:color/transparent"-->
+
         <ListView
+            android:divider="@android:color/transparent"
             android:id="@+id/listView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"

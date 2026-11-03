@@ -2,12 +2,13 @@ package com.example.onlinedatabase;
 
 public class User {
     private String Name, State;
-    private int Age;
+    private int Age, StateSignal;
 
-    public User(String name, String state, int age) {
+    public User(String name, String state, int age, int stateSignal) {
         Name = name;
         State = state;
         Age = age;
+        StateSignal = stateSignal;
     }
 
     public String getName() {
@@ -32,5 +33,13 @@ public class User {
 
     public void setAge(int age) {
         Age = age;
+    }
+
+    public int getStateSignal() {
+        return StateSignal;
+    }
+
+    public void setStateSignal(int stateSignal) {
+        StateSignal = stateSignal;
     }
 }
