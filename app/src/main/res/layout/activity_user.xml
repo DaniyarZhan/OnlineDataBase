@@ -32,7 +32,16 @@
             android:id="@+id/StateTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:inputType="textMultiLine"
             android:hint="@string/stateHint"/>
+
+        <EditText
+            android:id="@+id/AgeTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:inputType="text"
+            android:hint="@string/ageHint"/>
     </LinearLayout>
 
     <Button

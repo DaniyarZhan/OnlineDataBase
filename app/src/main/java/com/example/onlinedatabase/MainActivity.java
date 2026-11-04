@@ -19,6 +19,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity {
 
+    int positionActiveUser;
     ListView listView;
     Context context;
     LayoutInflater layoutInflater;
@@ -26,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
 
     //Панель профиля пользователя
     FrameLayout UserPanel;
-    TextView NameTextView, StateTextView, AgeTextView;
+    static TextView NameTextView, StateTextView, AgeTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,8 +43,9 @@ public class MainActivity extends AppCompatActivity {
         intent.putExtra(POSITION, position);
         startActivity(intent);
     }
-    public static void UpdateList() {
+    public static void UpdateListAndUserPanel(User user) {
         userListAdapter.notifyDataSetChanged();
+        InitPanel(user);
     }
 
     private void Init() {
@@ -69,6 +71,10 @@ public class MainActivity extends AppCompatActivity {
             UserPanel.setVisibility(View.VISIBLE);
         else
             UserPanel.setVisibility(View.GONE);
+    }
+
+    public void EditUser(View view) {
+        GoToUserProfile(positionActiveUser);
     }
 
     private class UserListAdapter extends BaseAdapter {
@@ -115,18 +121,16 @@ public class MainActivity extends AppCompatActivity {
             nameView.setText(currentUser.getName());
             stateView.setText(currentUser.getState());
 
-            currentView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    InitPanel(getItem(position));
-                    UserVisibility(true);
-                }
+            currentView.setOnClickListener((view) -> {
+                positionActiveUser = position;
+                InitPanel(getItem(position));
+                UserVisibility(true);
             });
             return currentView;
         }
     }
 
-    private void InitPanel(User item) {
+    private static void InitPanel(User item) {
         NameTextView.setText(item.getName());
         StateTextView.setText(item.getState());
         AgeTextView.setText(String.valueOf(item.getAge()));
