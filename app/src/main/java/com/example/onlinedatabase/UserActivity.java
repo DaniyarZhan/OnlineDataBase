@@ -1,5 +1,6 @@
 package com.example.onlinedatabase;
 
+import static com.example.onlinedatabase.Transform.parseIntOrDefault;
 import static com.example.onlinedatabase.UserStaticInfo.POSITION;
 import static com.example.onlinedatabase.UserStaticInfo.users;
 
@@ -40,13 +41,8 @@ public class UserActivity extends AppCompatActivity {
         activeUser.setName(NameTextView.getText().toString());
         activeUser.setState(StateTextView.getText().toString());
         String age = AgeTextView.getText().toString();
-        try {
-            activeUser.setAge(Integer.parseInt(age));
-        }
-        catch (Exception NumberFormatException) {
-            //вносим возраст предыдущего пользователя
-            activeUser.setAge(activeUser.getAge());
-        }
+
+        activeUser.setAge(parseIntOrDefault(age,activeUser.getAge()));
 
         MainActivity.UpdateListAndUserPanel(activeUser);
         finish();

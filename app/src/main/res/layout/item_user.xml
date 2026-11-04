@@ -31,11 +31,13 @@
             <TextView
                 android:id="@+id/NameTextView"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                style="@style/NameText"/>
             <TextView
                 android:id="@+id/StateTextView"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                style="@style/StateText"/>
         </LinearLayout>
     </LinearLayout>
 </FrameLayout>
