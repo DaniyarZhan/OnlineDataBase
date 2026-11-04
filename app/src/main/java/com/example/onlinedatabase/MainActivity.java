@@ -1,7 +1,11 @@
 package com.example.onlinedatabase;
 
+import static com.example.onlinedatabase.UserStaticInfo.POSITION;
+import static com.example.onlinedatabase.UserStaticInfo.users;
+
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,44 +15,35 @@ import android.widget.FrameLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import kotlin.Suppress;
 
 public class MainActivity extends AppCompatActivity {
 
     ListView listView;
     Context context;
     LayoutInflater layoutInflater;
-    //Список пользователей объявим
-    List<User> users = new ArrayList<>();
-    UserListAdapter userListAdapter;
+    static UserListAdapter userListAdapter;
 
     //Панель профиля пользователя
     FrameLayout UserPanel;
     TextView NameTextView, StateTextView, AgeTextView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        AddUsersInList();
+        new UserStaticInfo();
         Init();
+        GoToUserProfile(1);
     }
 
-    private void AddUsersInList() {
-        users.add(new User("Алексей", "Я ушел", 18, 0));
-        users.add(new User("Андрей", "Я не буду работать", 17, 1));
-        users.add(new User("Максим", "Я анимешник", 19, 2));
-        users.add(new User("Дмитрий", "Отдохнуть хочу", 27, 1));
-        users.add(new User("Алексей", "Я ушел", 15, 2));
-        users.add(new User("Алексий", "Я умер", 91, 0));
+    public void GoToUserProfile(int position) {
+        Intent intent = new Intent(context,UserActivity.class);
+        intent.putExtra(POSITION, position);
+        startActivity(intent);
+    }
+    public static void UpdateList() {
+        userListAdapter.notifyDataSetChanged();
     }
 
     private void Init() {

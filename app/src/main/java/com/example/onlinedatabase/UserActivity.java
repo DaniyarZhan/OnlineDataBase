@@ -1,0 +1,43 @@
+package com.example.onlinedatabase;
+
+import static com.example.onlinedatabase.UserStaticInfo.POSITION;
+import static com.example.onlinedatabase.UserStaticInfo.users;
+
+import android.os.Bundle;
+import android.view.View;
+import android.widget.EditText;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+public class UserActivity extends AppCompatActivity {
+    private User activeUser;
+    private EditText NameTextView, StateTextView;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_user);
+        int position = getIntent().getIntExtra(POSITION, 0);
+        activeUser = users.get(position);
+        Init();
+        setUserInfo();
+    }
+
+    private void setUserInfo() {
+        NameTextView.setText(activeUser.getName());
+        StateTextView.setText(activeUser.getState());
+    }
+    private void Init() {
+        NameTextView = findViewById(R.id.NameTextView);
+        StateTextView = findViewById(R.id.StateTextView);
+    }
+    public void Back(View view) {
+        onBackPressed();
+    }
+    public void Save(View view) {
+        activeUser.setName(NameTextView.getText().toString());
+        activeUser.setState(StateTextView.getText().toString());
+        MainActivity.UpdateList();
+        finish();
+    }
+}
