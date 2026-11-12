@@ -14,6 +14,7 @@ import static com.example.onlinedatabase.UserStaticInfo.USERS_PROFILE_INFO;
 import static com.example.onlinedatabase.UserStaticInfo.USERS_SIGN_IN_INFO;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
@@ -52,6 +53,7 @@ public class SignActivity extends AppCompatActivity {
         String password = sp.getString(PASSWORD, "");
         LoginTextView.setText(login);
         PasswordTextView.setText(password);
+        SignIn(LoginTextView);
     }
 
     @Deprecated
@@ -89,7 +91,7 @@ public class SignActivity extends AppCompatActivity {
                     Object value = snapshot.child(login).child(PASSWORD).getValue();
                     if (value != null) {
                         if (value.toString().equals(getPassword()))
-                            goNext(snapshot.child(login).child(PROFILE_ID).getValue().toString());
+                            goNext(snapshot.child(PROFILE_ID).toString(), login, getPassword());
                         else CantSignIn();
                     }
                     else CantSignIn();
@@ -101,7 +103,6 @@ public class SignActivity extends AppCompatActivity {
         }
         else {
             Vibrate(SignActivity.this);
-
             Toast.makeText(SignActivity.this,
                     getResources().getText(R.string.NullParametersMessage),
                     Toast.LENGTH_SHORT).show();
@@ -143,10 +144,15 @@ public class SignActivity extends AppCompatActivity {
     private String getNewState() {
         return NewStateTextView.getText().toString();
     }
-    private void goNext(String profileId) {
-        UserStaticInfo.profileId = profileId;
+
+    private void goNext(String profileId, String login, String password) {
         SaveUser(getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE),
                 getLogin(), getPassword());
+        UserStaticInfo.profileId = profileId;
+
+        Intent intent = new Intent(this, LoadedUserDataActivity.class);
+        startActivity(intent);
+        finish();
     }
 
     public void SignUp(View view) {
@@ -163,10 +169,12 @@ public class SignActivity extends AppCompatActivity {
                         String login = getNewLogin();
                         database.getReference(USERS_SIGN_IN_INFO).child(login).child(PASSWORD).setValue(getNewPassword());
                         database.getReference(USERS_SIGN_IN_INFO).child(login).child(PROFILE_ID).setValue(id);
+
                         database.getReference(USERS_PROFILE_INFO).child(id).child(AGE).setValue(getNewAge());
                         database.getReference(USERS_PROFILE_INFO).child(id).child(NAME).setValue(getNewName());
                         database.getReference(USERS_PROFILE_INFO).child(id).child(STATE).setValue(getNewState());
-                        goNext(id);
+
+                        goNext(id, login, getNewPassword());
                     }
                     else Toast.makeText(SignActivity.this, getResources().getText(R.string.UserExistMessage), Toast.LENGTH_SHORT).show();
                 }
