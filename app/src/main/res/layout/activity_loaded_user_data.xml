@@ -14,11 +14,11 @@
         <FrameLayout            android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="2">
-            <ImageView                android:id="@+id/imageForLoaded"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:src="@drawable/circle"/>
+            <fragment
+                android:id="@+id/logo"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:name="com.example.onlinedatabase.AnimeImageFragment"/>
         </FrameLayout>
         <FrameLayout
             android:layout_width="match_parent"

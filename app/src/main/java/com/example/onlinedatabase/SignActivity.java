@@ -53,19 +53,19 @@ public class SignActivity extends AppCompatActivity {
         String password = sp.getString(PASSWORD, "");
         LoginTextView.setText(login);
         PasswordTextView.setText(password);
-        SignIn(LoginTextView);
+        SignIn();
     }
 
     @Deprecated
     private void Init() {
         TabHost tabHost = findViewById(R.id.tabHost);
         tabHost.setup();
-        TabHost.TabSpec tabSpec = TabHost.newTabSpec("tag1");
+        TabHost.TabSpec tabSpec = tabHost.newTabSpec("tag1");
         tabSpec.setContent(R.id.tabSignIn);
         tabSpec.setIndicator("Вход");
         tabHost.addTab(tabSpec);
 
-        tabSpec = TabHost.newTabSpec("tag2");
+        tabSpec = tabHost.newTabSpec("tag2");
         tabSpec.setContent(R.id.tabSignUp);
         tabSpec.setIndicator("Регистрация");
         tabHost.addTab(tabSpec);
@@ -81,6 +81,9 @@ public class SignActivity extends AppCompatActivity {
     }
 
     public void SignIn(View view) {
+        SignIn();
+    }
+    public void SignIn() {
         if (EditTextNoNullWithAnimation(PasswordTextView) && EditTextNoNullWithAnimation(LoginTextView)){
             FirebaseDatabase database = FirebaseDatabase.getInstance();
             DatabaseReference myRef = database.getReference(USERS_SIGN_IN_INFO);
@@ -103,9 +106,7 @@ public class SignActivity extends AppCompatActivity {
         }
         else {
             Vibrate(SignActivity.this);
-            Toast.makeText(SignActivity.this,
-                    getResources().getText(R.string.NullParametersMessage),
-                    Toast.LENGTH_SHORT).show();
+            Toast.makeText(SignActivity.this, getResources().getText(R.string.NullParametersMessage), Toast.LENGTH_SHORT).show();
         }
     }
 

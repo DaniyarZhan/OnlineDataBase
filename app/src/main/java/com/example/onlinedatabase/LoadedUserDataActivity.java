@@ -1,5 +1,6 @@
 package com.example.onlinedatabase;
 
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -8,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class LoadedUserDataActivity extends AppCompatActivity {
 
+    MediaPlayer mPlayer;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -16,9 +18,33 @@ public class LoadedUserDataActivity extends AppCompatActivity {
     }
 
     private void Init() {
-        Animation animation = AnimationUtils.loadAnimation(
-                this, R.anim.logo_rotate_animation
-        );
-        findViewById(R.id.imageForLoaded).startAnimation(animation);
+        mPlayer = MediaPlayer.create(this, R.raw.shade);
+        mPlayer.setVolume(0.2f, 0.2f);
+        mPlayer.setLooping(true);
+        mPlayer.start();
+    }
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if (mPlayer != null)
+            mPlayer.start();
+    }
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (mPlayer.isPlaying())
+            mPlayer.pause();
+    }
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (mPlayer.isPlaying())
+            mPlayer.stop();
+    }
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if (mPlayer.isPlaying())
+            mPlayer.stop();
     }
 }
