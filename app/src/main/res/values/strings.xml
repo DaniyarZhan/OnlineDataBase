@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">OnlineDataBase</string>
+    <string name="app_name">Мессенджер</string>
     <string name="save">Coхранить</string>
     <string name="nameHint">Имя</string>
     <string name="stateHint">Статус</string>

@@ -5,7 +5,9 @@ import java.util.List;
 
 public class UserStaticInfo {
 
-    //ключ параметра позиция
+
+    //ключи параметра
+    public final static String LOGIN = "login";
     public final static String POSITION = "position";
     public final static String USERS_SIGN_IN_INFO = "UsersSignInInfo";
     public final static String USERS_PROFILE_INFO = "UsersProfileInfo";

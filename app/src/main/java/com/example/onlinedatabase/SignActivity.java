@@ -1,8 +1,11 @@
 package com.example.onlinedatabase;
 
+import static com.example.onlinedatabase.Transform.APP_PREFERENCES;
+import static com.example.onlinedatabase.Transform.SaveUser;
 import static com.example.onlinedatabase.Transform.StringNoNull;
 import static com.example.onlinedatabase.Transform.Vibrate;
 import static com.example.onlinedatabase.UserStaticInfo.AGE;
+import static com.example.onlinedatabase.UserStaticInfo.LOGIN;
 import static com.example.onlinedatabase.UserStaticInfo.NAME;
 import static com.example.onlinedatabase.UserStaticInfo.PASSWORD;
 import static com.example.onlinedatabase.UserStaticInfo.PROFILE_ID;
@@ -10,6 +13,8 @@ import static com.example.onlinedatabase.UserStaticInfo.STATE;
 import static com.example.onlinedatabase.UserStaticInfo.USERS_PROFILE_INFO;
 import static com.example.onlinedatabase.UserStaticInfo.USERS_SIGN_IN_INFO;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.view.animation.Animation;
@@ -37,6 +42,16 @@ public class SignActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign);
         Init();
+
+        CheckSignInInfo();
+    }
+
+    private void CheckSignInInfo() {
+        SharedPreferences sp = getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE);
+        String login = sp.getString(LOGIN, "");
+        String password = sp.getString(PASSWORD, "");
+        LoginTextView.setText(login);
+        PasswordTextView.setText(password);
     }
 
     @Deprecated
@@ -130,6 +145,8 @@ public class SignActivity extends AppCompatActivity {
     }
     private void goNext(String profileId) {
         UserStaticInfo.profileId = profileId;
+        SaveUser(getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE),
+                getLogin(), getPassword());
     }
 
     public void SignUp(View view) {
