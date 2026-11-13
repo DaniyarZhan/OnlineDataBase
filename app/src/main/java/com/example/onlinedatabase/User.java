@@ -1,7 +1,7 @@
 package com.example.onlinedatabase;
 
 public class User {
-    private String Name, State;
+    private String Id, Name, State;
     private int Age, StateSignal;
 
     public User(String name, String state, int age, int stateSignal) {
@@ -41,5 +41,13 @@ public class User {
 
     public void setStateSignal(int stateSignal) {
         StateSignal = stateSignal;
+    }
+
+    public String getId() {
+        return Id;
+    }
+
+    public void setId(String id) {
+        Id = id;
     }
 }

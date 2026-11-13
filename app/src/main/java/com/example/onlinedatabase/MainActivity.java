@@ -35,7 +35,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         new UserStaticInfo();
         Init();
-        GoToUserProfile(1);
     }
 
     public void GoToUserProfile(int position) {

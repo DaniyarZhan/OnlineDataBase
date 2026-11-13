@@ -19,6 +19,10 @@ public class UserActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user);
         int position = getIntent().getIntExtra(POSITION, 0);
+        if (users.isEmpty() || position >= users.size()) {
+            finish(); // Закрываем экран, если данных нет
+            return;
+        }
         activeUser = users.get(position);
         Init();
         setUserInfo();

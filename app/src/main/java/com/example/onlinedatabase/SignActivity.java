@@ -5,6 +5,7 @@ import static com.example.onlinedatabase.Transform.SaveUser;
 import static com.example.onlinedatabase.Transform.StringNoNull;
 import static com.example.onlinedatabase.Transform.Vibrate;
 import static com.example.onlinedatabase.UserStaticInfo.AGE;
+import static com.example.onlinedatabase.UserStaticInfo.ID;
 import static com.example.onlinedatabase.UserStaticInfo.LOGIN;
 import static com.example.onlinedatabase.UserStaticInfo.NAME;
 import static com.example.onlinedatabase.UserStaticInfo.PASSWORD;
@@ -43,7 +44,6 @@ public class SignActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign);
         Init();
-
         CheckSignInInfo();
     }
 
@@ -93,8 +93,11 @@ public class SignActivity extends AppCompatActivity {
                     String login = getLogin();
                     Object value = snapshot.child(login).child(PASSWORD).getValue();
                     if (value != null) {
-                        if (value.toString().equals(getPassword()))
-                            goNext(snapshot.child(PROFILE_ID).toString(), login, getPassword());
+                        if (value.toString().equals(getPassword())){
+                            String profileId = snapshot.child(login).child(PROFILE_ID).getValue(String.class);
+                            UserStaticInfo.profileId = profileId;
+                            goNext(profileId, login, getPassword());
+                        }
                         else CantSignIn();
                     }
                     else CantSignIn();
@@ -148,7 +151,7 @@ public class SignActivity extends AppCompatActivity {
 
     private void goNext(String profileId, String login, String password) {
         SaveUser(getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE),
-                getLogin(), getPassword());
+                login, password);
         UserStaticInfo.profileId = profileId;
 
         Intent intent = new Intent(this, LoadedUserDataActivity.class);
@@ -171,6 +174,7 @@ public class SignActivity extends AppCompatActivity {
                         database.getReference(USERS_SIGN_IN_INFO).child(login).child(PASSWORD).setValue(getNewPassword());
                         database.getReference(USERS_SIGN_IN_INFO).child(login).child(PROFILE_ID).setValue(id);
 
+                        database.getReference(USERS_PROFILE_INFO).child(id).child(ID).setValue(id);
                         database.getReference(USERS_PROFILE_INFO).child(id).child(AGE).setValue(getNewAge());
                         database.getReference(USERS_PROFILE_INFO).child(id).child(NAME).setValue(getNewName());
                         database.getReference(USERS_PROFILE_INFO).child(id).child(STATE).setValue(getNewState());

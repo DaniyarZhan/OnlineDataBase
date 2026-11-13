@@ -1,11 +1,15 @@
 package com.example.onlinedatabase;
 
+import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
+import android.os.Handler;
+import android.os.Looper;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.onlinedatabase.chats.ChatActivity;
+import com.example.onlinedatabase.chats.ContactsActivity;
 
 public class LoadedUserDataActivity extends AppCompatActivity {
 
@@ -15,6 +19,11 @@ public class LoadedUserDataActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_loaded_user_data);
         Init();
+        new Handler(Looper.getMainLooper()).postDelayed(() -> {
+            Intent intent = new Intent(this, ContactsActivity.class);
+            startActivity(intent);
+            finish();
+        }, 3000);
     }
 
     private void Init() {

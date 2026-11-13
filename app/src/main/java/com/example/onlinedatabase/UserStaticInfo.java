@@ -7,6 +7,7 @@ public class UserStaticInfo {
 
 
     //ключи параметра
+    public final static String ID = "id";
     public final static String LOGIN = "login";
     public final static String POSITION = "position";
     public final static String USERS_SIGN_IN_INFO = "UsersSignInInfo";
